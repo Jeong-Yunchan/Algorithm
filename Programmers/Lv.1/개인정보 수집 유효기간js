@@ -1,0 +1,76 @@
+today = "2022.05.19";
+terms = ["A 6", "B 12", "C 3"];
+privacies = ["2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C"];
+
+function solution(today, terms, privacies){
+  var answer = [];
+  privacies.forEach((privacy, index) => {
+    const [date, term] = privacy.split(' ')
+    const termPeriod = Number(terms.find((innerTerm) => {
+      return (innerTerm[0] === term)
+    }).split(' ')[1]);  
+
+    const[eYear, eMon, eDay] =  getExpireDate(date, termPeriod);
+    const[year, mon, day] = today.split('.').map(v => Number(v));
+
+    let expired = false;
+
+    if(year > eYear){
+      expired = true;
+    }
+    if(year === eYear && mon > eMon){
+      expired = true;
+    }
+    if(year === eYear && mon === eMon && day > eDay){
+      expired = true;
+    }
+    if(expired){
+      answer.push(index + 1)
+    }
+  })
+  return answer;  
+};
+
+const getExpireDate = (dateString, month) => {
+  let [year, mon, day] = dateString.split('.').map((v)=>Number(v));
+  mon += month;
+  day -= 1;
+  if(day === 0){
+    day =28;
+    mon -= 1;
+  }
+  if(mon > 12){
+    const month12count = Math.floor(mon / 12);
+    mon = mon - 12 *month12count;
+    year += month12count;
+  }
+  if(mon === 0){
+    mon += 12;
+    year -= 1;
+  }
+
+  return [year, mon, day];
+}
+
+console.log(solution(today, terms, privacies));
+
+/*
+const termset = new Map();
+
+function TermSet(terms){  
+  for(let i = 0 ; i < terms.length ; i++){
+    let t = terms[i].split(' ');
+    termset.set(t[0], t[1]);
+  }
+  console.log(termset);
+}
+
+function DateSet(privacies){
+  for(let i = 0 ; i < privacies.length ; i++){
+    let t = privacies[i].split(' ');
+    termset.get(t[1]);
+  }
+}
+
+TermSet(terms,privacies);
+*/
