@@ -5,19 +5,19 @@ const getCombinations = function (arr, selectNumber) {
 
   //fixed = 고정된 값, index = 배열 순회 위치, origin == arr
   arr.forEach((fixed, index, origin) => {
-    //고정된 값을 제외한 나머지 부분
-    const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
+    //순서가 있기 때문에 고정된 값 뒤의 나머지 부분
+    const rest = origin.slice(index + 1);
 
     //나머지의 조합을 구한다.
     const combination = getCombinations(rest, selectNumber - 1);
-
+    //console.log(combination);
     //고정된 요소에 리턴된 조합 붙이기
     const attached = combination.map((el) => [fixed, ...el]);
-    //console.log(attached);
+
     results.push(...attached);
   });
   console.log(results);
   return results;
 };
-getCombinations([1, 2, 3, 4], 2);
-  
+
+getCombinations([1, 7], 2);
