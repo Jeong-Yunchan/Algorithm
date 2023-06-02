@@ -1,20 +1,12 @@
 function solution(number, k) {
-  const stack = [];
-  let answer = '';
-
-  for(let i = 0 ; i < number.length ; i++){
-    const el = number[i];
-
-    while( k > 0 && stack[stack.length-1] < el){
-      stack.pop();
-      k--;
-    }
-    stack.push(el);
-    console.log(stack);
+  const arr=[];
+  for(let i=0;i<number.length;i+=1){
+      while(arr.length>0 && arr[arr.length-1]<number[i] && k>0){
+          k-=1;
+          arr.pop();
+      }
+      arr.push(number[i]);
   }
-  console.log(stack);
+  arr.splice(number.length-k,k);
+  return arr.join('');
 }
-
-const number = '15638111119';
-const k = 5;
-solution(number, k);
