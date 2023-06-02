@@ -6,7 +6,13 @@ function solution(number, k) {
           arr.pop();
       }
       arr.push(number[i]);
+      console.log(arr);
   }
-  arr.splice(number.length-k,k);
+  let t = arr.splice(number.length-k,k);
+  console.log("t :",t)
   return arr.join('');
 }
+
+const number = "4177252841";
+const k =4;
+solution(number,k);
